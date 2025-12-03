@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use App\Models\{Driver, Trip};
 
 class User extends Authenticatable
@@ -52,9 +52,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Driver::class);
     }
-    
+
     public function trips()
     {
         return $this->hasMany(Trip::class);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

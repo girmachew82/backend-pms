@@ -66,8 +66,9 @@ public function sendOtp(Request $request)
         $user = User::where('email', $request->email)->first();
 
         // Create Sanctum token
-        $token = $user->createToken('API Token')->plainTextToken;
-
+       // $token = $user->createToken('API Token')->plainTextToken;
+       //Create passport toke
+       $token = $user->createToken('API Token')->accessToken;
         // Delete OTP
         $otpData->delete();
 
