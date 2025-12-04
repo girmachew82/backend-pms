@@ -3,7 +3,7 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\V1\Api\{AuthController, DriverController, OtpAuthController};
+use App\Http\Controllers\V1\Api\{AuthController, DriverController, OtpAuthController, UserController};
 
 
 Route::post('/send-otp', [OtpAuthController::class, 'sendOtp']);
@@ -15,19 +15,18 @@ Route::prefix('passport')->name('passport.')->group(function(){
 });
 
 Route::middleware('auth:api')->group(function () {
-    
+
     Route::get("/posts", [PostController::class, "index"]);
     Route::post("/posts", [PostController::class, "store"]);
     Route::get("/posts/{post}", [PostController::class, "show"]);
     Route::put("/posts/{post}", [PostController::class, "update"]);
     Route::delete("/posts/{post}", [PostController::class, "destroy"]);
-
-
     Route::get('/drivers', [DriverController::class,'index']);
     Route::post('/drivers', [DriverController::class,'update']);
-    Route::get('/users', function (Request $request){
-        return $request->user();
-    });
+    Route::get('/users', [UserController::class,'index']);
+    Route::post('/users', [UserController::class,'store']);
+    Route::get('/users/{user}', [UserController::class,'show']);
+    Route::patch('/users/{user}', [UserController::class,'update']);
 });
 
 // Route::group(['middleware' => 'auth:sanctum'], function (){
