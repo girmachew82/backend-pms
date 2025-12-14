@@ -31,5 +31,34 @@ services:
       - db
     ports:
       - "8081:8080"
+
+  rever:
+    container_name: "${CONTAINER_NAME_PREFIX}-reverb"
+    build: .
+    ports:
+      - "6001:8080"
+    command: php artisan rever:start
+    volumes:
+      - ${PATH_TO_LARAVEL_PROJECT}:/var/www/html
+    environment:
+      # --- REQUIRED REVERB CONNECTION/AUTH ---
+      - BROADCAST_CONNECTION=reverb  # Ensure Reverb is the active broadcaster
+      - REVERB_APP_ID=${REVERB_APP_ID}
+      - REVERB_APP_KEY=${REVERB_APP_KEY}
+      - REVERB_APP_SECRET=${REVERB_APP_SECRET}
+      
+      # --- NETWORK CONFIGURATION (CRITICAL for frontend client) ---
+      - REVERB_PORT=6001
+      - REVERB_HOST=localhost
+      
+      # --- APPLICATION LOGIC (CRITICAL for authorization) ---
+      - APP_KEY=${APP_KEY}
+      - DB_DATABASE=${DB_NAME}
+      - DB_USERNAME=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      
+    restart: unless-stopped
+    depends_on:
+      - db
 volumes:
   db:

@@ -13,7 +13,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN apt-get -y update && apt-get install -y libicu-dev libzip-dev zip libjpeg-dev libpng-dev libfreetype6-dev git
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure gd '--with-jpeg' '--with-freetype'
-RUN docker-php-ext-install intl opcache pdo_mysql zip gd
+RUN docker-php-ext-install intl opcache pdo_mysql zip gd pcntl
 RUN pecl install xdebug
 RUN a2enmod rewrite
 

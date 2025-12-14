@@ -15,7 +15,7 @@ Route::prefix('passport')->name('passport.')->group(function(){
 });
 
 Route::middleware('auth:api')->group(function () {
-
+    Route::get('/users/export',[UserController::class,'export']);
     Route::get("/posts", [PostController::class, "index"]);
     Route::post("/posts", [PostController::class, "store"]);
     Route::get("/posts/{post}", [PostController::class, "show"]);
@@ -27,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/users', [UserController::class,'store']);
     Route::get('/users/{user}', [UserController::class,'show']);
     Route::patch('/users/{user}', [UserController::class,'update']);
+    Route::delete('/users/{user}', [UserController::class,'destroy']);
 });
 
 // Route::group(['middleware' => 'auth:sanctum'], function (){
